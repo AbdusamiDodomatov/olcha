@@ -7,8 +7,7 @@ app_name = 'orders'
 
 router = DefaultRouter()
 router.register(r'orders', OrderViewSet)
-router.register(r'favorites', FavoriteViewSet) 
-
+router.register(r'favorites', FavoriteViewSet, basename='favorites')
 
 
 urlpatterns = [

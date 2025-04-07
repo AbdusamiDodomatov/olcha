@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'django_filters',
     'products',
     'user',
-    'orders',
+    'orders.apps.OrdersConfig',
 
 ]
 

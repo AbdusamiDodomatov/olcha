@@ -1,7 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
-from .models import Category, Product
-from .serializers import CategorySerializer, ProductSerializer
+from rest_framework import viewsets, permissions
+from .models import Category, Product, Rating
+from .serializers import CategorySerializer, ProductSerializer, RatingSerializer
 from django_filters import rest_framework as filters
 
 
@@ -24,3 +24,14 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category']
+
+
+class RatingViewSet(viewsets.ModelViewSet):
+    serializer_class = RatingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Rating.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

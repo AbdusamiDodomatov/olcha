@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product
+from .models import Category, Product, Rating
 
 class CategorySerializer(serializers.ModelSerializer):
     subcategories = serializers.SerializerMethodField()
@@ -15,8 +15,20 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField()  # Показать имя категории
+    category = serializers.StringRelatedField() 
 
     class Meta:
         model = Product
         fields = ['id', 'name', 'description', 'price', 'stock', 'image', 'category']
+
+
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ['id', 'user', 'product', 'score', 'rated_at']
+        read_only_fields = ['user', 'rated_at']
+
+    def validate_score(self, value):
+        if value < 1 or value > 5:
+            raise serializers.ValidationError("Оценка должна быть от 1 до 5")
+        return value

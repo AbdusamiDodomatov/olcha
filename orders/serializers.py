@@ -17,3 +17,4 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ['user', 'product']
+        read_only_fields = ['user', 'added_at']
