@@ -7,7 +7,7 @@ from user.serializers import ProfileSerializer
 
 
 class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
+    queryset = User.objects.prefetch_related('favorites', 'orders')
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 

@@ -10,5 +10,5 @@ router.register(r'products', ProductViewSet)
 router.register(r'ratings', RatingViewSet, basename='ratings')
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 ]

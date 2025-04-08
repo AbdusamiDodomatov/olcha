@@ -3,6 +3,8 @@ from rest_framework import viewsets, permissions
 from .models import Category, Product, Rating
 from .serializers import CategorySerializer, ProductSerializer, RatingSerializer
 from django_filters import rest_framework as filters
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -19,6 +21,8 @@ class ProductFilter(filters.FilterSet):
         fields = ['min_price', 'max_price', 'category']
 
 
+
+@method_decorator(cache_page(60 * 5), name='dispatch') 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

@@ -3,7 +3,7 @@ from .models import Order, Favorite
 from .serializers import OrderSerializer, FavoriteSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
+    queryset = Order.objects.select_related('user', 'product').all()
     serializer_class = OrderSerializer
 
 
